@@ -1,0 +1,96 @@
+# Maintainer: Alexey Pavlov <Alexpux@gmail.com>
+
+_realname=openssl
+pkgbase=mingw-w64-${_realname}
+pkgname=("${MINGW_PACKAGE_PREFIX}-${_realname}")
+_ver=1.1.0i
+# use a pacman compatible version scheme
+pkgver=${_ver/[a-z]/.${_ver//[0-9.]/}}
+pkgrel=1
+pkgdesc="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security (mingw-w64)"
+url="https://www.openssl.org"
+license=('BSD')
+arch=('any')
+depends=("${MINGW_PACKAGE_PREFIX}-ca-certificates"
+         "${MINGW_PACKAGE_PREFIX}-gcc-libs"
+         "${MINGW_PACKAGE_PREFIX}-zlib")
+makedepends=("${MINGW_PACKAGE_PREFIX}-gcc")
+options=('strip' '!buildflags' 'staticlibs')
+noextract=(${_realname}-${_ver}.tar.gz)
+source=(https://www.openssl.org/source/${_realname}-${_ver}.tar.gz{,.asc}
+        'openssl-1.1.0-unix-Makefile.tmpl.patch'
+        'openssl-1.1.0-relocation.patch')
+sha256sums=('ebbfc844a8c8cc0ea5dc10b86c9ce97f401837f3fa08c17b2cdadc118253cf99'
+            '9090bf3dfe945e4609a44def3a44668bd96004bc6516d3432c33ee6f1578609c'
+            'b3ea62a3e85a7fc37d157653a747d42f982312138adb8410941be71e74ae101b'
+            'c8b914e4dee48bbc400816e8ff6ef3355f72c2d72301487e2c7807745bc6c037')
+
+validpgpkeys=('8657ABB260F056B1E5190839D9C4D26D0E604491')
+
+prepare() {
+  # Clean up old sources so re-patching doesn't fail.
+  [[ -d ${srcdir}/${_realname}-${_ver} ]] && rm -rf ${srcdir}/${_realname}-${_ver}
+  tar -xzvf ${_realname}-${_ver}.tar.gz -C ${srcdir} || true
+  cd ${srcdir}/${_realname}-${_ver}
+
+  patch -p1 -i ${srcdir}/openssl-1.1.0-unix-Makefile.tmpl.patch
+  patch -p1 -i ${srcdir}/openssl-1.1.0-relocation.patch
+}
+
+build() {
+  # No support for out-of-source builds
+  mkdir -p ${srcdir}/build-${CARCH}
+  cp -a ${srcdir}/${_realname}-${_ver}/* ${srcdir}/build-${CARCH}
+
+  # Use mingw cflags instead of hardcoded ones
+  sed -i -e '/^"mingw"/ s/-fomit-frame-pointer -O3 -Wall/-O2 -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions --param=ssp-buffer-size=4/' ${srcdir}/build-${CARCH}/Configure
+
+  _mingw=mingw
+  if $(echo ${CARCH} | grep -q x86_64); then
+    _mingw=mingw64
+  fi
+  cd "${srcdir}/build-${CARCH}"
+  export MSYS2_ARG_CONV_EXCL="--prefix="
+  
+  ./Configure \
+    --prefix=${MINGW_PREFIX} \
+    --openssldir=ssl \
+    --api=1.0.0 \
+    ${_mingw} \
+    shared \
+    no-ssl3  \
+    zlib-dynamic \
+    enable-capieng \
+    -D__MINGW_USE_VC2005_COMPAT \
+    -DOPENSSLBIN=\"\\\"${MINGW_PREFIX}/bin\\\"\"
+
+  cd "${srcdir}/build-${CARCH}"
+  make -j1 ZLIB_INCLUDE=-I"${MINGW_PREFIX}"/include depend all
+}
+
+check() {
+  cd "${srcdir}/build-${CARCH}"
+#  make -j1 test
+  make VERBOSE=1 test
+}
+
+package() {
+  mkdir -p "${pkgdir}${MINGW_PREFIX}"/bin
+  mkdir -p "${pkgdir}${MINGW_PREFIX}"/include/openssl
+  mkdir -p "${pkgdir}${MINGW_PREFIX}"/lib/engines-1_1
+  mkdir    "${pkgdir}${MINGW_PREFIX}"/lib/pkgconfig
+  mkdir -p "${pkgdir}${MINGW_PREFIX}"/share/licenses/${_realname}
+  
+  cd "${srcdir}/build-${CARCH}"
+  make -j1 DESTDIR="${pkgdir}" MANDIR=${MINGW_PREFIX}/share/man MANSUFFIX=ssl install
+  
+  install -D -m644 LICENSE "${pkgdir}${MINGW_PREFIX}"/share/licenses/${_realname}/LICENSE
+
+  chmod -R 777 "${pkgdir}${MINGW_PREFIX}"/bin
+  chmod -R 777 "${pkgdir}${MINGW_PREFIX}"/lib
+#  chmod -R 777 "${pkgdir}${MINGW_PREFIX}"/lib/engines
+
+  install -m644 ms/applink.c "${pkgdir}${MINGW_PREFIX}"/include/openssl/
+  rm -rf "${pkgdir}${MINGW_PREFIX}"/bin/c_rehash
+  rm -rf "${pkgdir}${MINGW_PREFIX}"/{ssl/misc,ssl/man}
+}

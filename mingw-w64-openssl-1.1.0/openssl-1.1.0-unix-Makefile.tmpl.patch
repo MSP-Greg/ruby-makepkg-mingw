@@ -1,0 +1,16 @@
+diff --git a/Configurations/unix-Makefile.tmpl b/Configurations/unix-Makefile.tmpl
+index 034d93e653..8fa8f0d791 100644
+--- a/Configurations/unix-Makefile.tmpl
++++ b/Configurations/unix-Makefile.tmpl
+@@ -268,9 +268,9 @@ list-tests:
+ 	@echo "Tests are not supported with your chosen Configure options"
+ 	@ : {- output_on() if !$disabled{tests}; "" -}
+ 
+-install: install_sw install_ssldirs install_docs
++install: install_sw install_ssldirs
+ 
+-uninstall: uninstall_docs uninstall_sw
++uninstall: uninstall_sw
+ 
+ libclean:
+ 	@set -e; for s in $(SHLIB_INFO); do \

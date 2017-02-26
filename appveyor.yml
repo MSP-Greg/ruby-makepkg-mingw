@@ -1,0 +1,8 @@
+---
+clone_depth: 5
+
+install:
+  - ps: .\update_msys2 $env:APPVEYOR_REPO_COMMIT_MESSAGE
+
+build_script:
+  - ps: .\make_pkg     $env:APPVEYOR_REPO_COMMIT_MESSAGE

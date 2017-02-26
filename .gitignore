@@ -1,0 +1,13 @@
+*.xlsb
+*.7z
+**/*.tar.bz2
+**/*.tar.gz
+**/*.tar.gz.asc
+**/*.tar.gz.sig
+**/*.tar.xz
+**/*.log
+*/*.log.*
+*.txt
+
+*/src/**/*
+*/pkg/**/*
