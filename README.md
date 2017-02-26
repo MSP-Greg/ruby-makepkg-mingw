@@ -40,6 +40,8 @@ Building all six versions may take quite a while (30+ minutes).  If you're build
 
 Test result files are in the test_results folder.  Your results should match.  Please check before adding the packages.
 
+If you decide to re-run the creation scripts, I might suggest deleting the `pkg` and `src` folders first.
+
 ### Installing the packages
 
 Likewise, three scripts are provided:
@@ -50,8 +52,16 @@ ruby_pacman_32
 ruby_pacman_64
 ```
 
-As above, run them with a full path.  You may need to confirm each packages installation.
+As above, run them with a full path.  You may need to confirm each packages' installation.
 
-If you decide to re-run the creation scripts, I might suggest deleting the `pkg` and `src` folders first.
+### Ruby PKGBUILD Changes
+
+OpenSSL 1.1.0 changes the dll file names.  The patch `0003-new-openssl-filenames.patch` in the `ruby_build_patches` folder needs to be added to `PKGBUILD prepare()` code.
+```
+  patch -p1 -i ${srcdir}/0003-new-openssl-filenames.patch
+```
+
+SHA256 is `67e2ccfd9149f13c19486039aea115091a96f4524c59f5a5bb09ef46b969a0c9` for `sha256sums`. 
+
 
 I threw the scripts and this readme together rather quickly.  I've only tested the 'all' scripts.
