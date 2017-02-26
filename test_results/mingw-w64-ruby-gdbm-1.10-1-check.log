@@ -1,0 +1,64 @@
+## --------------------- ##
+## gdbm 1.10 test suite. ##
+## --------------------- ##
+  1: gdbm version                                    ok
+
+GDBM interface
+
+  2: create database                                 ok
+  3: fetch a record                                  ok
+  4: fetch: nonexisting record                       FAILED (fetch01.at:20)
+  5: delete a record                                 ok
+  6: delete: non existing record                     FAILED (delete01.at:20)
+  7: delete: all records                             ok
+
+Compatibility library (dbm/ndbm)
+
+  8: create database                                 ok
+  9: converting a 1.8-style database                 ok
+ 10: fetch a record                                  ok
+ 11: fetch: nonexisting record                       FAILED (dbmfetch01.at:20)
+ 12: fetch from a read-only database                 ok
+ 13: fetch from a read-only 1.8-style database       ok
+ 14: delete a record                                 ok
+ 15: delete: non existing record                     FAILED (dbmdel01.at:20)
+ 16: delete: all records                             ok
+
+DB options
+
+ 17: setopt                                          ok
+ 18: setopt: mmap options                            skipped (setopt01.at:20)
+
+Cloexec
+
+ 19: cloexec: gdbm_open                              skipped (cloexec00.at:20)
+ 20: cloexec: gdbm_reorganize                        skipped (cloexec01.at:20)
+ 21: cloexec: dbm_open                               skipped (cloexec02.at:20)
+ 22: cloexec: dbm_open -creat                        skipped (cloexec03.at:20)
+
+## ------------- ##
+## Test results. ##
+## ------------- ##
+
+ERROR: 17 tests were run,
+4 failed unexpectedly.
+5 tests were skipped.
+## -------------------------- ##
+## testsuite.log was created. ##
+## -------------------------- ##
+
+Please send `tests/testsuite.log' and all information you think might help:
+
+   To: <bug-gdbm@gnu.org>
+   Subject: [gdbm 1.10] testsuite: 4 6 11 15 failed
+
+
+You may investigate any problem if you feel able to do so, in which
+case the test suite provides a good starting point.  Its output may
+be found below `tests/testsuite.dir'.
+
+make[2]: [Makefile:753: check-local] Error 1 (ignored)
+make[2]: Leaving directory '/d/GitHub/ruby-makepkg-mingw/mingw-w64-ruby-gdbm/src/build-x86_64/tests'
+make[1]: Leaving directory '/d/GitHub/ruby-makepkg-mingw/mingw-w64-ruby-gdbm/src/build-x86_64/tests'
+make[1]: Entering directory '/d/GitHub/ruby-makepkg-mingw/mingw-w64-ruby-gdbm/src/build-x86_64'
+make[1]: Leaving directory '/d/GitHub/ruby-makepkg-mingw/mingw-w64-ruby-gdbm/src/build-x86_64'

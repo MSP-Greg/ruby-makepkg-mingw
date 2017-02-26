@@ -1,0 +1,9 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+pacman -U --force ${DIR}/mingw-w64-ruby-gdbm/mingw-w64-i686-ruby-gdbm-1.10-1-any.pkg.tar.xz
+
+pacman -U --force ${DIR}/mingw-w64-ruby-libyaml/mingw-w64-i686-ruby-libyaml-0.1.7-1-any.pkg.tar.xz
+
+pacman -U --force ${DIR}/mingw-w64-ruby-openssl/mingw-w64-i686-ruby-openssl-1.1.0.e-1-any.pkg.tar.xz

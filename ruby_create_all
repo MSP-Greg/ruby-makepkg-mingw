@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+cd ${DIR}/mingw-w64-ruby-gdbm
+makepkg-mingw -sLf --skippgpcheck
+
+cd ${DIR}/mingw-w64-ruby-libyaml
+makepkg-mingw -sLf --skippgpcheck
+
+cd ${DIR}/mingw-w64-ruby-openssl
+makepkg-mingw -sLf --skippgpcheck
