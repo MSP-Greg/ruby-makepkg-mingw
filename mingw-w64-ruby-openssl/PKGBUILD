@@ -59,7 +59,8 @@ build() {
     ${_mingw} \
     shared \
     zlib-dynamic \
-    enable-capieng
+    enable-capieng \
+    -D__MINGW_USE_VC2005_COMPAT
 
   echo "MINGW_PREFIX = ${MINGW_PREFIX}   make dir = ${srcdir}/build-${CARCH}"
   cd "${srcdir}/build-${CARCH}"
