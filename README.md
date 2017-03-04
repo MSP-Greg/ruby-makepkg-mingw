@@ -69,3 +69,10 @@ the Ruby trunk branch.
 This contains two folders, 'Full' and 'Summary'.  'Full' contains all four build
 logs (prepare, build, check, and package).  'Summary' contains the irregular info
 from build and check.
+
+### My build environment
+
+For reasons I won't go into, I have often installed build tools and regularly
+changing files on my D: drive.  Hence, mysy2 and my repos are on D:.  My OS and
+'normal apps' are on C:, along with my temp folder.  I normally use Windows as a
+standard user.  Hence, some of the test failures / errors are due to this.
