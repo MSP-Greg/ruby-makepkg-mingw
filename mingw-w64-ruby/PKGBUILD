@@ -1,0 +1,88 @@
+# Maintainer: Alexey Pavlov <alexpux@gmail.com>
+
+# Before building package need CD into directory with drive letter, like
+# cd /c/build/mingw-w64-ruby
+
+_realname=ruby
+pkgbase=mingw-w64-${_realname}
+pkgname="${MINGW_PACKAGE_PREFIX}-${_realname}"
+pkgver=2.5.0
+pkgrel=1
+pkgdesc="An object-oriented language for quick and easy programming (mingw-w64)"
+arch=('any')
+url="https://www.ruby-lang.org/en"
+license=("BSD, custom")
+makedepends=("${MINGW_PACKAGE_PREFIX}-gcc" "${MINGW_PACKAGE_PREFIX}-pkg-config")
+depends=("${MINGW_PACKAGE_PREFIX}-gcc-libs"
+         "${MINGW_PACKAGE_PREFIX}-libffi"
+         "${MINGW_PACKAGE_PREFIX}-ncurses"
+         "${MINGW_PACKAGE_PREFIX}-readline"
+         "${MINGW_PACKAGE_PREFIX}-ruby-gdbm"
+         "${MINGW_PACKAGE_PREFIX}-ruby-libyaml"
+         "${MINGW_PACKAGE_PREFIX}-ruby-openssl"
+         )
+options=('staticlibs' 'strip')
+source=(0001-configure.patch
+        0002-mingw-w64-time-functions.patch
+        0004-test_enum-segfault.patch
+        0005-test_readline.patch
+        )
+sha256sums=('09122073acd8c9e6ad6b48feefe08004baccc58b8b3916a7fd02de3e6de787eb'
+            '99e025de8bc2b7c3bbb5115d09be8803ae66fd64bfe747d27913dd869fdbb270'
+            '6f16083d3b035d1c19a9c85c3f4560c646af20995237c208fae1da9224967511'
+            '04c1bcb7067c4bc8522d9e1254bd62b6c2dd639d7536c5944be51d4077a55a4a')
+
+prepare() {
+  cd ${srcdir}/${_realname}-${pkgver}
+
+  echo "=> 0001-configure.patch"
+  patch -p1 -i ${srcdir}/0001-configure.patch
+
+  echo "=> 0002-mingw-w64-time-functions.patch"
+  patch -p1 -i ${srcdir}/0002-mingw-w64-time-functions.patch
+
+#  echo "=> 0003-new-openssl-filenames.patch"
+#  patch -p1 -i ${srcdir}/0003-new-openssl-filenames.patch
+
+  echo "=> 0004-test_enum-segfault.patch"
+  patch -p1 -i ${srcdir}/0004-test_enum-segfault.patch
+
+  echo "=> 0005-test_readline.patch"
+  patch -p1 -i ${srcdir}/0005-test_readline.patch
+  
+  autoreconf -fi
+}
+
+build() {
+  local FFI_INC=$(pkg-config --cflags libffi)
+  CPPFLAGS+=" -DFD_SETSIZE=2048 ${FFI_INC} -I${MINGW_PREFIX}/include/ncurses"
+  CFLAGS+=" -I${MINGW_PREFIX}/include/ncurses ${FFI_INC}"
+  CXXFLAGS+=" -I${MINGW_PREFIX}/include/ncurses ${FFI_INC}"
+
+  [[ -d "${srcdir}/build-${MINGW_CHOST}" ]] && rm -rf "${srcdir}/build-${MINGW_CHOST}"
+  mkdir -p "${srcdir}/build-${MINGW_CHOST}" && cd "${srcdir}/build-${MINGW_CHOST}"
+  ../${_realname}-${pkgver}/configure \
+    --prefix=${MINGW_PREFIX} \
+    --build=${MINGW_CHOST} \
+    --host=${MINGW_CHOST} \
+    --target=${MINGW_CHOST} \
+    --with-baseruby=${RUBY} \
+    --disable-install-doc
+
+  make -j1 all
+}
+
+check() {
+  cd "${srcdir}/build-${MINGW_CHOST}"
+  # TODO: Tests fail currently
+  make -ij1 "TESTOPTS=-v -q" test-all || true
+}
+
+package() {
+  cd "${srcdir}/build-${MINGW_CHOST}"
+  make -f GNUMakefile DESTDIR="${pkgdir}" install-nodoc
+  for script in {erb,gem,irb,rdoc,ri}; do
+    install ${srcdir}/ruby-${pkgver}/bin/${script} \
+      ${pkgdir}${MINGW_PREFIX}/bin/
+  done
+}

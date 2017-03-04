@@ -1,9 +1,0 @@
---- ruby-2.5.0/ext/openssl/extconf.rb.orig	Sat Feb 18 10:11:51 2017
-+++ ruby-2.5.0/ext/openssl/extconf.rb	Fri Feb 17 21:13:07 2017
-@@ -46,4 +46,4 @@
-   result = have_header("openssl/ssl.h")
--  result &&= %w[crypto libeay32].any? {|lib| have_library(lib, "CRYPTO_malloc")}
--  result &&= %w[ssl ssleay32].any? {|lib| have_library(lib, "SSL_new")}
-+  result &&= %w[crypto libeay32 libcrypto-1_1].any? {|lib| have_library(lib, "CRYPTO_malloc")}
-+  result &&= %w[ssl ssleay32 libssl-1_1].any? {|lib| have_library(lib, "SSL_new")}
-   unless result

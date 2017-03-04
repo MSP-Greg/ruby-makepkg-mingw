@@ -1,0 +1,19 @@
+--- ruby-2.5.0/test/readline/test_readline.rb.orig	Fri Feb 24 22:03:02 2017
++++ ruby-2.5.0/test/readline/test_readline.rb	Thu Mar 02 08:34:03 2017
+@@ -580,7 +580,11 @@
+   def with_temp_stdio
+-    Tempfile.create("test_readline_stdin") {|stdin|
+-      Tempfile.create("test_readline_stdout") {|stdout|
+-        yield stdin, stdout
+-      }
+-    }
++    stdin =  Tempfile.new("test_readline_stdin")
++    stdout = Tempfile.new("test_readline_stdout")
++    yield stdin, stdout
++    if stdout
++      stdout.closed? ? stdout.unlink : stdout.close!
++    end
++    if stdin
++      stdin.closed?  ? stdin.unlink  : stdin.close!
++    end
+   end

@@ -50,8 +50,6 @@ build() {
   cd "${srcdir}/build-${CARCH}"
   export MSYS2_ARG_CONV_EXCL="--prefix="
   
-  echo "dir = ${srcdir}/build-${CARCH}   --prefix = ${MINGW_PREFIX}   _mingw = ${_mingw}"
-  
   ./Configure \
     --prefix=${MINGW_PREFIX} \
     --openssldir=${MINGW_PREFIX} \
@@ -62,7 +60,6 @@ build() {
     enable-capieng \
     -D__MINGW_USE_VC2005_COMPAT
 
-  echo "MINGW_PREFIX = ${MINGW_PREFIX}   make dir = ${srcdir}/build-${CARCH}"
   cd "${srcdir}/build-${CARCH}"
   make -j1 ZLIB_INCLUDE=-I"${MINGW_PREFIX}"/include depend all
 }
@@ -74,8 +71,6 @@ check() {
 }
 
 package() {
-  echo "pkgdir = ${pkgdir}   cd ${srcdir}/build-${CARCH}"
-
   mkdir -p "${pkgdir}${MINGW_PREFIX}"/bin
   mkdir -p "${pkgdir}${MINGW_PREFIX}"/include/openssl
   mkdir -p "${pkgdir}${MINGW_PREFIX}"/lib/engines-1_1

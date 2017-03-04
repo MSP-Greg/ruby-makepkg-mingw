@@ -1,0 +1,31 @@
+--- ruby-2.5.0/include/ruby/win32.h.orig	2017-02-18
++++ ruby-2.5.0/include/ruby/win32.h	2017-02-18
+@@ -717,8 +717,10 @@
+ 
+ int rb_w32_times(struct tms *);
+ 
++#ifndef __MINGW64_VERSION_MAJOR
+ struct tm *gmtime_r(const time_t *, struct tm *);
+ struct tm *localtime_r(const time_t *, struct tm *);
++#endif
+ 
+ /* thread stuff */
+ int  rb_w32_sleep(unsigned long msec);
+--- ruby-2.5.0/win32/win32.c.orig	2017-02-18
++++ ruby-2.5.0/win32/win32.c	2017-02-18
+@@ -7678,6 +7678,7 @@
+ # define localtime_s _localtime64_s
+ #endif
+ 
++#ifndef __MINGW64_VERSION_MAJOR
+ /* License: Ruby's */
+ struct tm *
+ gmtime_r(const time_t *tp, struct tm *rp)
+@@ -7701,6 +7701,7 @@
+ #endif
+     return rp;
+ }
++#endif
+ 
+ /* License: Ruby's */
+ struct tm *

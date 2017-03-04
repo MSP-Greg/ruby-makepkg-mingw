@@ -1,0 +1,23 @@
+--- ruby-2.5.0/configure.in.orig	Sat Feb 18 13:38:30 2017
++++ ruby-2.5.0/configure.in	Sat Feb 18 13:39:20 2017
+@@ -835,5 +835,3 @@
+ 		 -Wno-tautological-compare \
+-		 -Wno-parentheses-equality \
+-		 -Wno-constant-logical-operand \
+-		 -Wno-self-assign \
++		 -mwin32 \
+ 		 -Wunused-variable \
+@@ -1254,3 +1254,4 @@
+ 		AC_CHECK_TYPE([NET_LUID], [], [],
+ 			      [@%:@include <winsock2.h>
++			      @%:@include <windows.h>
+ 			      @%:@include <iphlpapi.h>])
+@@ -1590,7 +1590,7 @@
+ 	    @%:@include <stddef.h>
+             @%:@ifdef __GNUC__
+             @%:@define PRINTF_ARGS(decl, string_index, first_to_check) \
+-              decl __attribute__((format(printf, string_index, first_to_check)))
++              decl __attribute__((format(gnu_printf, string_index, first_to_check)))
+             @%:@else
+             @%:@define PRINTF_ARGS(decl, string_index, first_to_check) decl
+             @%:@endif

@@ -1,0 +1,39 @@
+ruby -v: ruby 2.5.0dev (2017-03-04 trunk 57768) [x64-mingw32]
+
+make[2]: Entering directory '/d/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/ext/readline'
+generating readline-x64-mingw32.def
+compiling ../../../ruby-2.5.0/ext/readline/readline.c
+../../../ruby-2.5.0/ext/readline/readline.c: In function 'getc_body':
+../../../ruby-2.5.0/ext/readline/readline.c:174:73: warning: passing argument 4 of 'PeekConsoleInputA' from incompatible pointer type [-Wincompatible-pointer-types]
+             if (PeekConsoleInput((HANDLE)_get_osfhandle(p->fd), &ir, 1, &n)) {
+                                                                         ^
+In file included from D:/msys64/mingw64/x86_64-w64-mingw32/include/windows.h:74:0,
+                 from D:/msys64/mingw64/x86_64-w64-mingw32/include/winsock2.h:23,
+                 from ../../../ruby-2.5.0/include/ruby/win32.h:41,
+                 from ../../../ruby-2.5.0/include/ruby/defines.h:243,
+                 from ../../../ruby-2.5.0/include/ruby/ruby.h:36,
+                 from ../../../ruby-2.5.0/include/ruby/encoding.h:23,
+                 from ../../../ruby-2.5.0/include/ruby/io.h:24,
+                 from ../../../ruby-2.5.0/ext/readline/readline.c:36:
+D:/msys64/mingw64/x86_64-w64-mingw32/include/wincon.h:207:29: note: expected 'LPDWORD {aka long unsigned int *}' but argument is of type 'int *'
+   WINBASEAPI WINBOOL WINAPI PeekConsoleInputA(HANDLE hConsoleInput,PINPUT_RECORD lpBuffer,DWORD nLength,LPDWORD lpNumberOfEventsRead);
+                             ^~~~~~~~~~~~~~~~~
+../../../ruby-2.5.0/ext/readline/readline.c:180:81: warning: passing argument 4 of 'ReadConsoleInputA' from incompatible pointer type [-Wincompatible-pointer-types]
+                         ReadConsoleInput((HANDLE)_get_osfhandle(p->fd), &ir, 1, &n);
+                                                                                 ^
+In file included from D:/msys64/mingw64/x86_64-w64-mingw32/include/windows.h:74:0,
+                 from D:/msys64/mingw64/x86_64-w64-mingw32/include/winsock2.h:23,
+                 from ../../../ruby-2.5.0/include/ruby/win32.h:41,
+                 from ../../../ruby-2.5.0/include/ruby/defines.h:243,
+                 from ../../../ruby-2.5.0/include/ruby/ruby.h:36,
+                 from ../../../ruby-2.5.0/include/ruby/encoding.h:23,
+                 from ../../../ruby-2.5.0/include/ruby/io.h:24,
+                 from ../../../ruby-2.5.0/ext/readline/readline.c:36:
+D:/msys64/mingw64/x86_64-w64-mingw32/include/wincon.h:209:29: note: expected 'LPDWORD {aka long unsigned int *}' but argument is of type 'int *'
+   WINBASEAPI WINBOOL WINAPI ReadConsoleInputA(HANDLE hConsoleInput,PINPUT_RECORD lpBuffer,DWORD nLength,LPDWORD lpNumberOfEventsRead);
+                             ^~~~~~~~~~~~~~~~~
+../../../ruby-2.5.0/ext/readline/readline.c:184:21: warning: implicit declaration of function 'rb_w32_wait_events' [-Wimplicit-function-declaration]
+                     rb_w32_wait_events(&h, 1, INFINITE);
+                     ^~~~~~~~~~~~~~~~~~
+linking shared-object readline.so
+make[2]: Leaving directory '/d/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/ext/readline'

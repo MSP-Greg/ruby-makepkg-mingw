@@ -1,5 +1,7 @@
 ## ruby-makepkg-mingw
 
+Current Build Data - `ruby 2.5.0dev (2017-03-04 trunk 57768) [x64-mingw32]`
+
 ### mingw/msys2 package builders for Ruby build dependencies
 
 ### Important Notes
@@ -36,11 +38,14 @@ From the mingw64 shell, run them with a full path.  On my system, the command is
 /d/GitHub/ruby-makepkg-mingw/ruby_make_all
 ```
 
-Building all six versions may take quite a while (30+ minutes).  If you're building with Windows, you might want to disable any firewall security, as the OpenSSL tests will hit it.
+Building all six versions may take quite a while (30+ minutes).  If you're building
+with Windows, you might want to disable any firewall security, as the OpenSSL tests will hit it.
 
-Test result files are in the test_results folder.  Your results should match.  Please check before adding the packages.
+Test result files are in the test_results folder.  Your results should match.
+Please check before adding the packages.
 
-If you decide to re-run the creation scripts, I might suggest deleting the `pkg` and `src` folders first.
+If you decide to re-run the creation scripts, I might suggest deleting the `pkg`
+and `src` folders first.
 
 ### Installing the packages
 
@@ -54,14 +59,13 @@ ruby_pacman_64
 
 As above, run them with a full path.  You may need to confirm each packages' installation.
 
-### Ruby PKGBUILD Changes
+### `mingw-w64-ruby` Folder
 
-OpenSSL 1.1.0 changes the dll file names.  The patch `0003-new-openssl-filenames.patch` in the `ruby_build_patches` folder needs to be added to `PKGBUILD prepare()` code.
-```
-  patch -p1 -i ${srcdir}/0003-new-openssl-filenames.patch
-```
+This folder contains the current PBKBUILD and patch files I'm using for building
+the Ruby trunk branch.
 
-SHA256 is `67e2ccfd9149f13c19486039aea115091a96f4524c59f5a5bb09ef46b969a0c9` for `sha256sums`. 
+### `ruby_logs` Folder
 
-
-I threw the scripts and this readme together rather quickly.  I've only tested the 'all' scripts.
+This contains two folders, 'Full' and 'Summary'.  'Full' contains all four build
+logs (prepare, build, check, and package).  'Summary' contains the irregular info
+from build and check.

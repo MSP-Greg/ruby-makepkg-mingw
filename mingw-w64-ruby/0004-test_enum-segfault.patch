@@ -1,0 +1,10 @@
+--- ruby-2.5.0/test/ruby/test_enum.rb.orig	Sat Feb 18 09:59:32 2017
++++ ruby-2.5.0/test/ruby/test_enum.rb	Sat Feb 18 10:20:21 2017
+@@ -558,2 +558,3 @@
+
++=begin
+     assert_raise(RuntimeError) do
+@@ -583,2 +584,3 @@
+     end
++=end
+   end

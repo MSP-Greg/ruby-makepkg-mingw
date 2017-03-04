@@ -1,0 +1,208 @@
+ruby -v: ruby 2.5.0dev (2017-03-04 trunk 57768) [x64-mingw32]
+
+	CC = x86_64-w64-mingw32-gcc
+	LD = ld
+	LDSHARED = x86_64-w64-mingw32-gcc -shared 
+	CFLAGS = -march=x86-64 -mtune=generic -O2 -pipe -I/mingw64/include/ncurses -ID:/msys64/mingw64/lib/libffi-3.2.1/include 
+	XCFLAGS = -D_FORTIFY_SOURCE=2 -fno-strict-overflow -fvisibility=hidden -fexcess-precision=standard -DRUBY_EXPORT
+	CPPFLAGS = -D_FORTIFY_SOURCE=2 -D__USE_MINGW_ANSI_STDIO=1 -DFD_SETSIZE=2048 -ID:/msys64/mingw64/lib/libffi-3.2.1/include -I/mingw64/include/ncurses -D_WIN32_WINNT=0x0501 -D__MINGW_USE_VC2005_COMPAT   -I. -I.ext/include/x64-mingw32 -I../ruby-2.5.0/include -I../ruby-2.5.0 -I../ruby-2.5.0/enc/unicode/9.0.0
+	DLDFLAGS = -pipe -Wl,--enable-auto-image-base,--enable-auto-import -Wl,--out-implib=libx64-msvcrt-ruby250.dll.a x64-msvcrt-ruby250.def -Wl,--stack,0x00200000,--enable-auto-import -static-libgcc 
+	SOLIBS = x64-msvcrt-ruby250.res.o -lgmp -lshell32 -lws2_32 -liphlpapi -limagehlp -lshlwapi  
+x86_64-w64-mingw32-gcc.exe (Rev1, Built by MSYS2 project) 6.3.0
+
+Run options: "--ruby=./miniruby.exe -I../ruby-2.5.0/lib -I. -I.ext/common  ../ruby-2.5.0/tool/runruby.rb --extout=.ext  -- --disable-gems" --excludes-dir=../ruby-2.5.0/test/excludes --name=!/memory_leak/ -v -q
+
+# Running tests:
+
+[    1/16620] BufferedSocketTest#test_gets_empty = 0.00 s
+
+[ 5114/16620] TestFileExhaustive#test_realpath_mount_pointAccess is denied.
+Access is denied.
+ = 0.16 s
+
+[ 6742/16620] TestGemExtBuilder#test_build_extensions_extconf_bad = 0.22 s
+Leaked tempfile: TestGemExtBuilder#test_build_extensions_extconf_bad: #<Tempfile:./siteconf20170303-6480-1lu9kbz.rb (closed)>
+
+[ 6754/16620] TestGemExtExtConfBuilder#test_class_build_extconf_fail = 5.93 s
+Leaked tempfile: TestGemExtExtConfBuilder#test_class_build_extconf_fail: #<Tempfile:./siteconf20170303-6480-3w43ro.rb (closed)>
+
+[ 6757/16620] TestGemExtExtConfBuilder#test_class_build_env_make = 0.22 s
+Leaked tempfile: TestGemExtExtConfBuilder#test_class_build_env_make: #<Tempfile:./siteconf20170303-6480-1uq1u7w.rb (closed)>
+
+[13433/16620] TestReadline#test_completion_proc_empty_result = 0.02 s
+Leaked tempfile: TestReadline#test_completion_proc_empty_result: #<Tempfile:C:/Temp/test_readline_stdin20170303-6480-16tc0n7 (closed)>
+Leaked tempfile: TestReadline#test_completion_proc_empty_result: #<Tempfile:C:/Temp/test_readline_stdout20170303-6480-1oxv37f (closed)>
+
+[13441/16620] TestReadline#test_line_buffer__point = 0.02 s
+Leaked tempfile: TestReadline#test_line_buffer__point: #<Tempfile:C:/Temp/test_readline_stdin20170303-6480-12pbsn7 (closed)>
+Leaked tempfile: TestReadline#test_line_buffer__point: #<Tempfile:C:/Temp/test_readline_stdout20170303-6480-1o6inhj (closed)>
+
+[13442/16620] TestReadline#test_modify_text_in_pre_input_hook = 0.00 s
+Leaked tempfile: TestReadline#test_modify_text_in_pre_input_hook: #<Tempfile:C:/Temp/test_readline_stdin20170303-6480-u3bzm1 (closed)>
+Leaked tempfile: TestReadline#test_modify_text_in_pre_input_hook: #<Tempfile:C:/Temp/test_readline_stdout20170303-6480-18aitar (closed)>
+
+[13446/16620] TestReadline#test_readline = 0.02 s
+Leaked tempfile: TestReadline#test_readline: #<Tempfile:C:/Temp/test_readline_stdin20170303-6480-19vmgph (closed)>
+Leaked tempfile: TestReadline#test_readline: #<Tempfile:C:/Temp/test_readline_stdout20170303-6480-rawnw2 (closed)>
+
+[13447/16620] TestReadline#test_refresh_line = 0.09 s
+Leaked tempfile: TestReadline#test_refresh_line: #<Tempfile:C:/Temp/test_readline_stdin20170303-6480-v2yjvo (closed)>
+Leaked tempfile: TestReadline#test_refresh_line: #<Tempfile:C:/Temp/test_readline_stdout20170303-6480-l4tv13 (closed)>
+
+[13450/16620] TestReadline#test_using_quoting_detection_proc = 0.02 s
+Leaked tempfile: TestReadline#test_using_quoting_detection_proc: #<Tempfile:C:/Temp/test_readline_stdin20170303-6480-1rcd3ra (closed)>
+Leaked tempfile: TestReadline#test_using_quoting_detection_proc: #<Tempfile:C:/Temp/test_readline_stdout20170303-6480-410rtk (closed)>
+
+[16615/16620] YAMLStoreTest#test_yaml_store_files_are_accessed_as_binary_files = 3.51 s
+
+  1) Failure:
+Bug::Win32::TestDln#test_check_imported [D:/GitHub/ruby/test/-ext-/win32/test_dln.rb:15]:
+[Bug #6303].
+
+1. [2/2] Assertion for "stderr"
+   | <[]> expected but was
+   | <["D:/GitHub/ruby/lib/rubygems/core_ext/kernel_require.rb:55:in `require': 126: The specified module could not be found.   - D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/.ext/x64-mingw32/-test-/win32/dln.so (LoadError)",
+   |  "\tfrom D:/GitHub/ruby/lib/rubygems/core_ext/kernel_require.rb:55:in `require'"]>.
+
+  2) Failure:
+TestDir_M17N#test_entries_compose [D:/GitHub/ruby/test/ruby/test_dir_m17n.rb:417]:
+[ruby-core:48745] [Bug #7267].
+<["d\xE9tente"(Windows-1252), "x?????"(UTF-8)]> expected but was
+<["d\x82tente"(IBM437), "x?????"(IBM437)]>.
+
+  3) Failure:
+TestFile#test_utime [D:/GitHub/ruby/test/ruby/test_file.rb:346]:
+[ruby-core:44776].
+<2011-05-27 15:10:39 -0500> expected but was
+<2011-05-27 14:10:39 -0500>.
+
+  4) Failure:
+TestRubyOptions#test_command_line_progname_nonascii [D:/GitHub/ruby/test/ruby/test_rubyoptions.rb:755]:
+[ruby-dev:48752] [Bug #10555].
+
+1. [1/2] Assertion for "stdout"
+   | <["\xFF.rb"]> expected but was
+   | <[]>.
+
+2. [2/2] Assertion for "stderr"
+   | <[]> expected but was
+   | <["D:\\mingw-ri\\mingw-w64-ruby\\src\\build-x86_64-w64-mingw32\\ruby.exe: No such file or directory -- .rb (LoadError)"]>.
+
+  5) Failure:
+TestGemRequestSetLockfile#test_to_s_gem_dependency_non_default [D:/GitHub/ruby/test/rubygems/test_gem_request_set_lockfile.rb:239]:
+--- expected
++++ actual
+@@ -22,5 +22,5 @@
+ " +
+ "  a
+ " +
+-"  b
++"  b (>= 1)
+ "
+
+
+  6) Failure:
+TestGemResolver#test_raises_dependency_error [D:/GitHub/ruby/test/rubygems/test_gem_resolver.rb:425]:
+--- expected
++++ actual
+@@ -1,2 +1,2 @@
+-[Gem::Dependency.new("c", Gem::Requirement.new(["= 2"]), :runtime),
+- Gem::Dependency.new("c", Gem::Requirement.new(["= 1"]), :runtime)]
++[Gem::Dependency.new("c", Gem::Requirement.new(["= 1"]), :runtime),
++ Gem::Dependency.new("c", Gem::Requirement.new(["= 2"]), :runtime)]
+
+
+  7) Failure:
+TestGemResolver#test_raises_when_possibles_are_exhausted [D:/GitHub/ruby/test/rubygems/test_gem_resolver.rb:524]:
+Expected: "c-2"
+  Actual: "c-1"
+
+  8) Failure:
+TestProcess#test_execopts_open_chdir_m17n_path [D:/GitHub/ruby/test/ruby/test_process.rb:449]:
+<"C:/Temp/d20170303-6480-1i9mn8x/\u30C6\u30B9\u30C8"> expected but was
+<"C:/Temp/d20170303-6480-1i9mn8x/???">.
+
+  9) Failure:
+TestReadline#test_input_metachar [D:/GitHub/ruby/test/readline/test_readline.rb:420]:
+[ruby-core:45682].
+<"hello"> expected but was
+<"hfello">.
+
+ 10) Failure:
+TestRDocOptions#test_parse_write_options [D:/GitHub/ruby/test/rdoc/test_rdoc_options.rb:633]:
+[SystemExit] exception expected, not
+Class: <ArgumentError>
+Message: <"different prefix: \"D:/\" and \"C:/Temp/test_rdoc_options_6480\"">
+---Backtrace---
+D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/.ext/common/pathname.rb:520:in `relative_path_from'
+D:/GitHub/ruby/lib/rdoc/options.rb:1146:in `block in sanitize_path'
+D:/GitHub/ruby/lib/rdoc/options.rb:1144:in `reject'
+D:/GitHub/ruby/lib/rdoc/options.rb:1144:in `sanitize_path'
+D:/GitHub/ruby/lib/rdoc/options.rb:486:in `encode_with'
+D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/.ext/common/psych/visitors/yaml_tree.rb:562:in `dump_coder'
+D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/.ext/common/psych/visitors/yaml_tree.rb:161:in `accept'
+D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/.ext/common/psych/visitors/yaml_tree.rb:127:in `push'
+D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/.ext/common/psych.rb:416:in `dump'
+D:/GitHub/ruby/lib/rdoc/options.rb:1223:in `block in write_options'
+D:/GitHub/ruby/lib/open-uri.rb:37:in `open'
+D:/GitHub/ruby/lib/open-uri.rb:37:in `open'
+D:/GitHub/ruby/lib/rdoc/options.rb:1220:in `write_options'
+D:/GitHub/ruby/lib/rdoc/options.rb:1116:in `parse'
+D:/GitHub/ruby/test/rdoc/test_rdoc_options.rb:634:in `block (2 levels) in test_parse_write_options'
+---------------
+
+ 11) Error:
+TestRDocOptions#test_parse_page_dir:
+ArgumentError: different prefix: "C:/" and "D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32"
+    D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/.ext/common/pathname.rb:520:in `relative_path_from'
+    D:/GitHub/ruby/lib/rdoc/options.rb:547:in `finish_page_dir'
+    D:/GitHub/ruby/lib/rdoc/options.rb:516:in `finish'
+    D:/GitHub/ruby/lib/rdoc/options.rb:1113:in `parse'
+    D:/GitHub/ruby/test/rdoc/test_rdoc_options.rb:489:in `block in test_parse_page_dir'
+
+ 12) Error:
+TestFileUtils#test_ln_s:
+Errno::EACCES: Permission denied @ rb_file_s_symlink - (../data/a, tmp/lnsdest)
+    D:/GitHub/ruby/lib/fileutils.rb:320:in `symlink'
+    D:/GitHub/ruby/lib/fileutils.rb:320:in `block in ln_s'
+    D:/GitHub/ruby/lib/fileutils.rb:1473:in `fu_each_src_dest0'
+    D:/GitHub/ruby/lib/fileutils.rb:318:in `ln_s'
+    D:/GitHub/ruby/test/fileutils/test_fileutils.rb:788:in `block in test_ln_s'
+    D:/GitHub/ruby/test/fileutils/test_fileutils.rb:786:in `each'
+    D:/GitHub/ruby/test/fileutils/test_fileutils.rb:786:in `test_ln_s'
+
+ 13) Error:
+TestSocket#test_connect_timeout:
+Errno::EINVAL: Invalid argument - connect(2) for 127.0.0.1:64408
+    D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/.ext/common/socket.rb:1198:in `__connect_nonblock'
+    D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/.ext/common/socket.rb:1198:in `connect_nonblock'
+    D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/.ext/common/socket.rb:56:in `connect_internal'
+    D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/.ext/common/socket.rb:137:in `connect'
+    D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/.ext/common/socket.rb:627:in `block in tcp'
+    D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/.ext/common/socket.rb:227:in `each'
+    D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/.ext/common/socket.rb:227:in `foreach'
+    D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/.ext/common/socket.rb:617:in `tcp'
+    D:/GitHub/ruby/test/socket/test_socket.rb:555:in `test_connect_timeout'
+
+ 14) Error:
+TestRDocOptions#test_encode_with_trim_paths:
+ArgumentError: different prefix: "D:/" and "C:/Temp/d20170303-6480-1wcl0q1/project"
+    D:/mingw-ri/mingw-w64-ruby/src/build-x86_64-w64-mingw32/.ext/common/pathname.rb:520:in `relative_path_from'
+    D:/GitHub/ruby/lib/rdoc/options.rb:1146:in `block in sanitize_path'
+    D:/GitHub/ruby/lib/rdoc/options.rb:1144:in `reject'
+    D:/GitHub/ruby/lib/rdoc/options.rb:1144:in `sanitize_path'
+    D:/GitHub/ruby/lib/rdoc/options.rb:486:in `encode_with'
+    D:/GitHub/ruby/test/rdoc/test_rdoc_options.rb:115:in `block (2 levels) in test_encode_with_trim_paths'
+    D:/GitHub/ruby/test/rdoc/test_rdoc_options.rb:101:in `chdir'
+    D:/GitHub/ruby/test/rdoc/test_rdoc_options.rb:101:in `block in test_encode_with_trim_paths'
+    D:/GitHub/ruby/lib/rdoc/test_case.rb:178:in `block (2 levels) in temp_dir'
+    D:/GitHub/ruby/lib/rdoc/test_case.rb:177:in `chdir'
+    D:/GitHub/ruby/lib/rdoc/test_case.rb:177:in `block in temp_dir'
+    D:/GitHub/ruby/lib/tmpdir.rb:89:in `mktmpdir'
+    D:/GitHub/ruby/lib/rdoc/test_case.rb:176:in `temp_dir'
+    D:/GitHub/ruby/test/rdoc/test_rdoc_options.rb:96:in `test_encode_with_trim_paths'
+
+Finished tests in 1365.114000s, 12.1711 tests/s, 1632.9039 assertions/s.
+16615 tests, 2229100 assertions, 10 failures, 4 errors, 151 skips
+
+ruby -v: ruby 2.5.0dev (2017-03-04 trunk 57768) [x64-mingw32]

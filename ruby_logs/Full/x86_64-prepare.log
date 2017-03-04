@@ -1,0 +1,16 @@
+ruby -v: ruby 2.5.0dev (2017-03-04 trunk 57768) [x64-mingw32]
+
+=> 0001-configure.patch
+patching file configure.in
+Hunk #2 succeeded at 1281 with fuzz 1 (offset 29 lines).
+Hunk #3 succeeded at 1619 (offset 30 lines).
+=> 0002-mingw-w64-time-functions.patch
+patching file include/ruby/win32.h
+patching file win32/win32.c
+Hunk #1 succeeded at 7677 (offset -1 lines).
+Hunk #2 succeeded at 7701 (offset -1 lines).
+=> 0004-test_enum-segfault.patch
+patching file test/ruby/test_enum.rb
+=> 0005-test_readline.patch
+patching file test/readline/test_readline.rb
+aclocal-1.15: warning: autoconf input should be named 'configure.ac', not 'configure.in'
