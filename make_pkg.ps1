@@ -104,7 +104,7 @@ $mingw = if ($bits -eq '64') { 'mingw64' } else { 'mingw32' }
 $env:path = "C:\msys64\$mingw\bin;C:\msys64\usr\bin;$base_path"
 Add-Key
 Write-Host "$($dash * 65) Starting Build" -ForegroundColor $fc
-bash.exe -c "MINGW_INSTALLS=$mingw makepkg-mingw -Lf"
+bash.exe -c `"MINGW_INSTALLS=$mingw makepkg-mingw -Lf --noprogressbar`"
 
 Check-Exit 'Package did not build!'
 
