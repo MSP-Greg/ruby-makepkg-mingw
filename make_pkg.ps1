@@ -10,7 +10,11 @@ $fc   = 'Yellow'
 
 $ks1  = 'hkp://pool.sks-keyservers.net'
 $ks2  = 'hkp://pgp.mit.edu'
+# Matt Caswell <matt@openssl.org>
 $key  = 'D9C4D26D0E604491'
+
+$master = 'openssl-1.1.1-pre9'
+$is_master = $false
 
 #——————————————————————————————————————————————————————————————————— Add GPG key
 function Add-Key {
@@ -76,12 +80,19 @@ function Retry {
   return $false
 }
 
+function Setup-Master {
+  git clone -q --depth=5 --no-tags --branch=master https://github.com/openssl/openssl.git C:\projects\ruby-makepkg-mingw\mingw-w64-openssl-master\src\$master
+}
+
 $base_name, $bits = $args[0].Split(' ')
 
 if ($base_name -match "\Amingw-w64-openssl-1\.1\.0" ) {
   $base_dir = "$PSScriptRoot/mingw-w64-openssl-1.1.0"
 } elseif ($base_name -match "\Amingw-w64-openssl-1\.1\.1" ) {
   $base_dir = "$PSScriptRoot/mingw-w64-openssl-1.1.0"
+} elseif ($base_name -match "\Amingw-w64-openssl-master" ) {
+  $base_dir = "$PSScriptRoot/mingw-w64-openssl-master"
+  $is_master = $true
 } else {
   Write-Host Incorrect base name $base_name -ForegroundColor $fc
   exit 1
@@ -102,7 +113,9 @@ if ( Test-Path -Path $base_dir -PathType Container ) {
 $mingw = if ($bits -eq '64') { 'mingw64' } else { 'mingw32' }
 
 $env:path = "C:\msys64\$mingw\bin;C:\msys64\usr\bin;$base_path"
-Add-Key
+
+if ($is_master) { Setup-Master } else { Add-Key }
+
 Write-Host "$($dash * 65) Starting Build" -ForegroundColor $fc
 bash.exe -c `"MINGW_INSTALLS=$mingw makepkg-mingw -Lf --noprogressbar`"
 
@@ -116,6 +129,8 @@ $log_zip = $package.replace('-any.pkg.tar.xz', '') + "_log_files.7z"
 if ($env:APPVEYOR) {
   Push-AppveyorArtifact $base_dir/$package
   Push-AppveyorArtifact $base_dir/$log_zip
+  $msg = "$bits bit package SHA256"
+  Add-AppveyorMessage -Message $msg -Details $(CertUtil -hashfile $$package SHA256)
 }
 
 Pop-Location
