@@ -1,8 +1,7 @@
 ---
 clone_depth: 5
 
-install:
-  - ps: .\update_msys2 $env:APPVEYOR_REPO_COMMIT_MESSAGE
-
 build_script:
-  - ps: .\make_pkg     $env:APPVEYOR_REPO_COMMIT_MESSAGE
+  - ps: .\update_msys2 "ignore 64"
+  - ps: .\make_pkg     "mingw-w64-openssl-1.1.0 64"
+  - ps: .\make_pkg     "mingw-w64-openssl-master 64"

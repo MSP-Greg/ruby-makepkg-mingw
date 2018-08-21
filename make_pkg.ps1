@@ -129,8 +129,10 @@ $log_zip = $package.replace('-any.pkg.tar.xz', '') + "_log_files.7z"
 if ($env:APPVEYOR) {
   Push-AppveyorArtifact $base_dir/$package
   Push-AppveyorArtifact $base_dir/$log_zip
-  $msg = "$bits bit package SHA256"
-  Add-AppveyorMessage -Message $msg -Details $(CertUtil -hashfile $$package SHA256)
+  $msg = "$package SHA256"
+  Add-AppveyorMessage -Message $msg -Details $(CertUtil -hashfile ./$package SHA256)
+  $msg = "$package SHA512"
+  Add-AppveyorMessage -Message $msg -Details $(CertUtil -hashfile ./$package SHA512)
 }
 
 Pop-Location
