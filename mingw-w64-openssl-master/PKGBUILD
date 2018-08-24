@@ -3,10 +3,10 @@
 _realname=openssl
 pkgbase=mingw-w64-${_realname}
 pkgname=("${MINGW_PACKAGE_PREFIX}-${_realname}")
-_ver=1.1.1-pre9
+_ver=1.1.1-pre10
 # use a pacman compatible version scheme
 #pkgver=${_ver/[a-z]/.${_ver//[0-9.]/}}
-pkgver=1.1.1_pre9
+pkgver=1.1.1_pre10
 pkgrel=1
 pkgdesc="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security (mingw-w64)"
 url="https://www.openssl.org"
@@ -24,7 +24,7 @@ source=('openssl-1.1.1-unix-Makefile.tmpl.patch'
         
 sha256sums=('fff9ac08ed728b4f5e50857e60804548dac815510359e82cab80b9686d36a19a'
             '180372a9ef944211323b8de45824f3a9c2d0bf373e6e0bae6ed7de992355a5fc'
-            'bbab9eb62fa9b52af5abbc74384951d21fd0a53fa5148e831dcce7b1213c1404')
+            '41D2F10181F73F18D8942E5DD237B5E024FB35E5B95C5FF97A4FFC16A094C654')
 
 validpgpkeys=('8657ABB260F056B1E5190839D9C4D26D0E604491')
 

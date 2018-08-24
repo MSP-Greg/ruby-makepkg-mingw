@@ -13,7 +13,7 @@ $ks2  = 'hkp://pgp.mit.edu'
 # Matt Caswell <matt@openssl.org>
 $key  = 'D9C4D26D0E604491'
 
-$master = 'openssl-1.1.1-pre9'
+$master = 'openssl-1.1.1-pre10'
 $is_master = $false
 
 #——————————————————————————————————————————————————————————————————— Add GPG key
@@ -127,12 +127,15 @@ $log_zip = $package.replace('-any.pkg.tar.xz', '') + "_log_files.7z"
 7z.exe a $log_zip .\*.log 1> $null
 
 if ($env:APPVEYOR) {
-  Push-AppveyorArtifact $base_dir/$package
   Push-AppveyorArtifact $base_dir/$log_zip
-  $msg = "$package SHA256"
-  Add-AppveyorMessage -Message $msg -Details $(CertUtil -hashfile ./$package SHA256)
-  $msg = "$package SHA512"
-  Add-AppveyorMessage -Message $msg -Details $(CertUtil -hashfile ./$package SHA512)
+  
+  Push-AppveyorArtifact $base_dir/$package
+  $msg = $package + '_SHA256'
+  $sha = $(CertUtil -hashfile ./$package SHA256).split("`r`n")[1].replace(' ', '')
+  Add-AppveyorMessage -Message $msg -Details $sha
+  $msg = $package + '_SHA512'
+  $sha = $(CertUtil -hashfile ./$package SHA512).split("`r`n")[1].replace(' ', '')
+  Add-AppveyorMessage -Message $msg -Details $sha
 }
 
 Pop-Location
