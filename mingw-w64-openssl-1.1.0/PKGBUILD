@@ -58,7 +58,6 @@ build() {
     --api=1.0.0 \
     ${_mingw} \
     shared \
-    no-ssl3  \
     zlib-dynamic \
     enable-capieng \
     -D__MINGW_USE_VC2005_COMPAT \

@@ -7,7 +7,7 @@ index b866670e18..ae7b7f3ade 100644
   */
  # define OPENSSL_VERSION_NUMBER  0x1010100aL
 -# define OPENSSL_VERSION_TEXT    "OpenSSL 1.1.1-pre10-dev  xx XXX xxxx"
-+# define OPENSSL_VERSION_TEXT    "OpenSSL 1.1.1-pre10-dev  24 Aug 2018"
++# define OPENSSL_VERSION_TEXT    "OpenSSL 1.1.1-pre10-dev  09 Sep 2018"
  
  /*-
   * The macros below are to be used for shared library (.so, .dll, ...)

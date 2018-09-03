@@ -122,20 +122,19 @@ bash.exe -c `"MINGW_INSTALLS=$mingw makepkg-mingw -Lf --noprogressbar`"
 Check-Exit 'Package did not build!'
 
 $package = $(Get-ChildItem -Path ./*-any.pkg.tar.xz | Sort-Object -Descending LastWriteTime | select -expand Name)
-$log_zip = $package.replace('-any.pkg.tar.xz', '') + "_log_files.7z"
+$sha512 = $(CertUtil -hashfile ./$package SHA512).split("`r`n")[1].replace(' ', '')
+$sha256 = $(CertUtil -hashfile ./$package SHA256).split("`r`n")[1].replace(' ', '')
 
+$log_zip = $package.replace('-any.pkg.tar.xz', '') + "_log_files.7z"
 7z.exe a $log_zip .\*.log 1> $null
 
 if ($env:APPVEYOR) {
-  Push-AppveyorArtifact $base_dir/$log_zip
-  
-  Push-AppveyorArtifact $base_dir/$package
-  $msg = $package + '_SHA256'
-  $sha = $(CertUtil -hashfile ./$package SHA256).split("`r`n")[1].replace(' ', '')
-  Add-AppveyorMessage -Message $msg -Details $sha
   $msg = $package + '_SHA512'
-  $sha = $(CertUtil -hashfile ./$package SHA512).split("`r`n")[1].replace(' ', '')
-  Add-AppveyorMessage -Message $msg -Details $sha
+  Add-AppveyorMessage -Message $msg -Details $sha512
+  $msg = $package + '_SHA256'
+  Add-AppveyorMessage -Message $msg -Details $sha256
+  Push-AppveyorArtifact $base_dir/$package
+  Push-AppveyorArtifact $base_dir/$log_zip
 }
 
 Pop-Location
