@@ -24,7 +24,7 @@ source=('openssl-1.1.1-unix-Makefile.tmpl.patch'
         
 sha256sums=('b5cce65680a061a0f127c195507a64f0bac37a5b93367018a9b19d27fec64a8f'
             '180372a9ef944211323b8de45824f3a9c2d0bf373e6e0bae6ed7de992355a5fc'
-            'b7944fa4f66c412c3fa16bad72c1175eb0232dc1a3f71eebabc957c152e35669')
+            '63936c17d58ab717de3fbeb89e54f1fc2acc9b35cc52408770d7fde3fdd54bab')
 
 validpgpkeys=('8657ABB260F056B1E5190839D9C4D26D0E604491')
 
