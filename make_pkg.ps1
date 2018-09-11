@@ -89,7 +89,7 @@ $base_name, $bits = $args[0].Split(' ')
 if ($base_name -match "\Amingw-w64-openssl-1\.1\.0" ) {
   $base_dir = "$PSScriptRoot/mingw-w64-openssl-1.1.0"
 } elseif ($base_name -match "\Amingw-w64-openssl-1\.1\.1" ) {
-  $base_dir = "$PSScriptRoot/mingw-w64-openssl-1.1.0"
+  $base_dir = "$PSScriptRoot/mingw-w64-openssl-1.1.1"
 } elseif ($base_name -match "\Amingw-w64-openssl-master" ) {
   $base_dir = "$PSScriptRoot/mingw-w64-openssl-master"
   $is_master = $true

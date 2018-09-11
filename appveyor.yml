@@ -3,5 +3,5 @@ clone_depth: 5
 
 build_script:
   - ps: .\update_msys2 "ignore 64"
-  - ps: .\make_pkg     "mingw-w64-openssl-master 64"
+  - ps: .\make_pkg     "mingw-w64-openssl-1.1.1 64"
   - ps: .\make_pkg     "mingw-w64-openssl-1.1.0 64"

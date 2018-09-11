@@ -18,13 +18,14 @@ depends=("${MINGW_PACKAGE_PREFIX}-ca-certificates"
 makedepends=("${MINGW_PACKAGE_PREFIX}-gcc")
 options=('strip' '!buildflags' 'staticlibs')
 # noextract=(${_realname}-${_ver}.tar.gz)
+
 source=('openssl-1.1.1-unix-Makefile.tmpl.patch'
         'openssl-1.1.1-relocation.patch'
-        'master_date.patch')
-        
+        'openssl_master_date.patch')
+
 sha256sums=('b5cce65680a061a0f127c195507a64f0bac37a5b93367018a9b19d27fec64a8f'
             '180372a9ef944211323b8de45824f3a9c2d0bf373e6e0bae6ed7de992355a5fc'
-            '63936c17d58ab717de3fbeb89e54f1fc2acc9b35cc52408770d7fde3fdd54bab')
+            '2757fb02c7bdb75e430e024f17466b7e272c8c8a2655f7ee8b07a4a96a3683d4')
 
 validpgpkeys=('8657ABB260F056B1E5190839D9C4D26D0E604491')
 
@@ -36,7 +37,7 @@ prepare() {
 
   patch -p1 -i ${srcdir}/openssl-1.1.1-unix-Makefile.tmpl.patch
   patch -p1 -i ${srcdir}/openssl-1.1.1-relocation.patch
-  patch -p1 -i ${srcdir}/master_date.patch
+  patch -p1 -i ${srcdir}/openssl_master_date.patch
 }
 
 build() {
@@ -83,15 +84,15 @@ package() {
   mkdir -p "${pkgdir}${MINGW_PREFIX}"/lib/engines-1_1
   mkdir    "${pkgdir}${MINGW_PREFIX}"/lib/pkgconfig
   mkdir -p "${pkgdir}${MINGW_PREFIX}"/share/licenses/${_realname}
-  
+
   cd "${srcdir}/build-${CARCH}"
   make -j1 DESTDIR="${pkgdir}" MANDIR=${MINGW_PREFIX}/share/man MANSUFFIX=ssl install
-  
+
   install -D -m644 LICENSE "${pkgdir}${MINGW_PREFIX}"/share/licenses/${_realname}/LICENSE
 
   chmod -R 777 "${pkgdir}${MINGW_PREFIX}"/bin
   chmod -R 777 "${pkgdir}${MINGW_PREFIX}"/lib
-#  chmod -R 777 "${pkgdir}${MINGW_PREFIX}"/lib/engines
+  chmod -R 777 "${pkgdir}${MINGW_PREFIX}"/lib/engines-1_1
 
   install -m644 ms/applink.c "${pkgdir}${MINGW_PREFIX}"/include/openssl/
   rm -rf "${pkgdir}${MINGW_PREFIX}"/bin/c_rehash

@@ -3,10 +3,9 @@
 _realname=openssl
 pkgbase=mingw-w64-${_realname}
 pkgname=("${MINGW_PACKAGE_PREFIX}-${_realname}")
-_ver=1.1.1-pre9
+_ver=1.1.1
 # use a pacman compatible version scheme
-#pkgver=${_ver/[a-z]/.${_ver//[0-9.]/}}
-pkgver=1.1.1_pre9
+pkgver=${_ver/[a-z]/.${_ver//[0-9.]/}}
 pkgrel=1
 pkgdesc="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security (mingw-w64)"
 url="https://www.openssl.org"
@@ -17,18 +16,23 @@ depends=("${MINGW_PACKAGE_PREFIX}-ca-certificates"
          "${MINGW_PACKAGE_PREFIX}-zlib")
 makedepends=("${MINGW_PACKAGE_PREFIX}-gcc")
 options=('strip' '!buildflags' 'staticlibs')
-# noextract=(${_realname}-${_ver}.tar.gz)
-source=('openssl-1.1.1-unix-Makefile.tmpl.patch'
-        'openssl-1.1.1-relocation.patch')
-sha256sums=('fff9ac08ed728b4f5e50857e60804548dac815510359e82cab80b9686d36a19a'
-            '180372a9ef944211323b8de45824f3a9c2d0bf373e6e0bae6ed7de992355a5fc')
+noextract=(${_realname}-${_ver}.tar.gz)
+
+source=(${url}/source/${_realname}-${_ver}.tar.gz{,.asc}
+        'openssl-1.1.1-relocation.patch'
+        'openssl-1.1.1-unix-Makefile.tmpl.patch')
+
+sha256sums=('2836875a0f89c03d0fdf483941512613a50cfb421d6fd94b9f41d7279d586a3d'
+            'f3296150114069ea73a72eafbfdcbb295b770e7cbf3266f9590f3d0932498b3e'
+            '180372a9ef944211323b8de45824f3a9c2d0bf373e6e0bae6ed7de992355a5fc'
+            'b5cce65680a061a0f127c195507a64f0bac37a5b93367018a9b19d27fec64a8f')
 
 validpgpkeys=('8657ABB260F056B1E5190839D9C4D26D0E604491')
 
 prepare() {
   # Clean up old sources so re-patching doesn't fail.
-#  [[ -d ${srcdir}/${_realname}-${_ver} ]] && rm -rf ${srcdir}/${_realname}-${_ver}
-#  tar -xzvf ${_realname}-${_ver}.tar.gz -C ${srcdir} || true
+  [[ -d ${srcdir}/${_realname}-${_ver} ]] && rm -rf ${srcdir}/${_realname}-${_ver}
+  tar -xzvf ${_realname}-${_ver}.tar.gz -C ${srcdir} || true
   cd ${srcdir}/${_realname}-${_ver}
 
   patch -p1 -i ${srcdir}/openssl-1.1.1-unix-Makefile.tmpl.patch
@@ -49,7 +53,7 @@ build() {
   fi
   cd "${srcdir}/build-${CARCH}"
   export MSYS2_ARG_CONV_EXCL="--prefix="
-  
+
   ./Configure \
     --prefix=${MINGW_PREFIX} \
     --openssldir=ssl \
@@ -78,15 +82,15 @@ package() {
   mkdir -p "${pkgdir}${MINGW_PREFIX}"/lib/engines-1_1
   mkdir    "${pkgdir}${MINGW_PREFIX}"/lib/pkgconfig
   mkdir -p "${pkgdir}${MINGW_PREFIX}"/share/licenses/${_realname}
-  
+
   cd "${srcdir}/build-${CARCH}"
   make -j1 DESTDIR="${pkgdir}" MANDIR=${MINGW_PREFIX}/share/man MANSUFFIX=ssl install
-  
+
   install -D -m644 LICENSE "${pkgdir}${MINGW_PREFIX}"/share/licenses/${_realname}/LICENSE
 
   chmod -R 777 "${pkgdir}${MINGW_PREFIX}"/bin
   chmod -R 777 "${pkgdir}${MINGW_PREFIX}"/lib
-#  chmod -R 777 "${pkgdir}${MINGW_PREFIX}"/lib/engines
+  chmod -R 777 "${pkgdir}${MINGW_PREFIX}"/lib/engines-1_1
 
   install -m644 ms/applink.c "${pkgdir}${MINGW_PREFIX}"/include/openssl/
   rm -rf "${pkgdir}${MINGW_PREFIX}"/bin/c_rehash
